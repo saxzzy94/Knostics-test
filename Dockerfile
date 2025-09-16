@@ -1,29 +1,49 @@
+# Build stage
 FROM node:20-alpine AS builder
 WORKDIR /app
 
+# Copy root package files
 COPY package*.json ./
 COPY server/package*.json ./server/
 COPY client/package*.json ./client/
 
-RUN npm ci --only=production
+# Install root dependencies
+RUN npm ci
 
+# Copy all files
 COPY . .
+
+# Build client
+WORKDIR /app/client
+RUN npm ci
 RUN npm run build
 
+# Build server
+WORKDIR /app/server
+RUN npm ci
+RUN npm run build
+
+# Production stage
 FROM node:20-alpine
 ENV NODE_ENV=production
 ENV NODE_OPTIONS=--max_old_space_size=2048
 
 WORKDIR /app
 
+# Copy server files
 COPY --from=builder /app/server/package*.json ./server/
 COPY --from=builder /app/server/dist ./server/dist
 COPY --from=builder /app/server/public ./server/public
 
+# Copy built client files to server public directory
+COPY --from=builder /app/client/dist ./server/public
+
 WORKDIR /app/server
 
+# Install only production dependencies
 RUN npm ci --only=production --omit=dev
 
+# Set up permissions
 RUN chown -R node:node /app
 USER node
 
