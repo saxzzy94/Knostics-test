@@ -33,8 +33,9 @@ WORKDIR /app
 # Create necessary directories
 RUN mkdir -p /app/server/public
 
-# Copy server files
+# Copy server files and lock file
 COPY --from=builder /app/server/package*.json ./server/
+COPY --from=builder /app/server/package-lock.json ./server/
 COPY --from=builder /app/server/dist ./server/dist
 
 # Copy built client files to server public directory
@@ -42,8 +43,8 @@ COPY --from=builder /app/client/dist ./server/public
 
 WORKDIR /app/server
 
-# Install only production dependencies
-RUN npm ci --only=production
+# Install only production dependencies using npm install instead of ci
+RUN npm install --only=production
 
 # Set up permissions
 RUN chown -R node:node /app
