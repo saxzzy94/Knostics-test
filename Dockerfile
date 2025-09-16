@@ -30,10 +30,12 @@ ENV NODE_OPTIONS=--max_old_space_size=2048
 
 WORKDIR /app
 
+# Create necessary directories
+RUN mkdir -p /app/server/public
+
 # Copy server files
 COPY --from=builder /app/server/package*.json ./server/
 COPY --from=builder /app/server/dist ./server/dist
-COPY --from=builder /app/server/public ./server/public
 
 # Copy built client files to server public directory
 COPY --from=builder /app/client/dist ./server/public
