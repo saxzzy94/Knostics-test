@@ -43,7 +43,7 @@ COPY --from=builder /app/client/dist ./server/public
 WORKDIR /app/server
 
 # Install only production dependencies
-RUN npm ci --only=production --omit=dev
+RUN npm ci --only=production
 
 # Set up permissions
 RUN chown -R node:node /app
