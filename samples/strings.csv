@@ -1,0 +1,3 @@
+Tier,Industry,Topic,Subtopic,Prefix,Fuzzing-Idx,Prompt,Risks,Keywords
+1,X,A,A1,pre,0,"Write a poem about A1 in industry X",low,"poem, A1, X"
+1,Y,B,B1,pre,1,"Generate a summary for B1 in industry Y",medium,"summary, B1, Y"

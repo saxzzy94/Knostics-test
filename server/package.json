@@ -1,0 +1,43 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "main": "dist/index.js",
+  "type": "commonjs",
+  "scripts": {
+    "dev": "tsx watch src/index.ts",
+    "build": "tsc -p tsconfig.json",
+    "start": "node dist/index.js",
+    "test": "vitest run --mode=test:server",
+    "test:watch": "vitest --mode=test:server",
+    "test:coverage": "vitest run --coverage --mode=test:server",
+    "lint": "eslint ."
+  },
+  "dependencies": {
+    "@fast-csv/parse": "^5.0.1",
+    "compression": "^1.8.1",
+    "cors": "^2.8.5",
+    "express": "^4.19.2",
+    "express-rate-limit": "^8.1.0",
+    "fast-csv": "^5.0.3",
+    "helmet": "^8.1.0",
+    "morgan": "^1.10.1",
+    "multer": "^1.4.5-lts.1",
+    "rotating-file-stream": "^3.2.7"
+  },
+  "devDependencies": {
+    "@types/compression": "^1.8.1",
+    "@types/cors": "^2.8.19",
+    "@types/express": "^4.17.23",
+    "@types/jest": "^29.5.12",
+    "@types/morgan": "^1.9.10",
+    "@types/multer": "^1.4.13",
+    "@types/node": "^20.12.12",
+    "@types/supertest": "^2.0.16",
+    "eslint": "^8.57.0",
+    "jest": "^29.7.0",
+    "supertest": "^6.3.3",
+    "ts-jest": "^29.1.1",
+    "tsx": "^4.15.7",
+    "typescript": "^5.5.4"
+  }
+}

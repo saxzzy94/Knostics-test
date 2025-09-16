@@ -1,0 +1,32 @@
+{
+  "name": "knostic-csv-app",
+  "private": true,
+  "workspaces": [
+    "client",
+    "server"
+  ],
+  "scripts": {
+    "dev": "concurrently \"cd client && npm run dev\" \"cd server && npm run dev\"",
+    "build": "npm run build:client && npm run build:server",
+    "build:client": "cd client && npm run build",
+    "build:server": "cd server && npm run build",
+    "start": "node server/dist/index.js",
+    "test": "npm run test:client && npm run test:server",
+    "test:client": "vitest run",
+    "test:server": "vitest run --mode=test:server",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "copy-client-to-server": "rm -rf server/public && mkdir -p server/public && cp -R client/dist/* server/public/"
+  },
+  "devDependencies": {
+    "@testing-library/dom": "^10.4.1",
+    "@testing-library/jest-dom": "^6.8.0",
+    "@testing-library/react": "^16.3.0",
+    "@testing-library/user-event": "^14.6.1",
+    "@vitest/coverage-v8": "^3.2.4",
+    "@vitest/ui": "^3.2.4",
+    "concurrently": "^8.2.2",
+    "jsdom": "^27.0.0",
+    "vitest": "^3.2.4"
+  }
+}
