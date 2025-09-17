@@ -23,51 +23,130 @@ The application is filename-agnostic. Detection is based on headers (case/punctu
 - Testing: Jest + ts-jest + Supertest (server), Vitest + React Testing Library (client)
 - Monorepo: npm workspaces
 
-## Getting Started (Local Dev)
+## 🚀 Getting Started
 
-Requirements: Node 18+ (recommended Node 20), npm 9+
+### Prerequisites
+- Node.js 18+ (Node 20 recommended)
+- npm 9+
+- Docker (optional, for containerized deployment)
+
+### Local Development Setup
+
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/your-username/knostic-csv-app.git
+   cd knostic-csv-app
+   ```
+
+2. **Install dependencies**
+   ```bash
+   npm install
+   ```
+
+3. **Start the development servers**
+   ```bash
+   npm run dev
+   ```
+   - Frontend: http://localhost:5173
+   - Backend API: http://localhost:3001
+   - The frontend is configured to proxy API requests to the backend
+
+4. **Try the sample data**
+   - Use the sample CSVs in the `samples/` directory to test the application
+   - The application is header-based, so filenames don't matter as long as the headers match
+
+## 🏗️ Building for Production
+
+### Using npm
 
 ```bash
-# from repo root
-npm install
-npm run dev
-```
-
-- Server runs on http://localhost:3001
-- Client runs on http://localhost:5173 (proxy to /api)
-
-Open http://localhost:5173 and try the flow:
-
-1) Upload classifications.csv (or any file with the right headers)
-2) Upload strings.csv
-3) Edit in-place, add/delete rows
-4) Validate strings
-5) Save and Export
-
-You can also use the sample CSVs under `samples/`.
-
-## Build & Run (Production)
-
-```bash
-# Build client → copy to server/public → build server
+# Build both client and server
 npm run build
-# Start server serving the built client
+
+# Start production server
 npm start
-# Server at http://localhost:3001
+
+# Server will be available at http://localhost:3001
 ```
 
-## Testing
+### Using Docker
+
+1. **Build the Docker image**
+   ```bash
+   docker build -t knostic-csv-app .
+   ```
+
+2. **Run the container**
+   ```bash
+   docker run -p 3001:3001 knostic-csv-app
+   ```
+   - The application will be available at http://localhost:3001
+
+3. **Using Docker Compose**
+   ```yaml
+   version: '3.8'
+   services:
+     app:
+       build: .
+       ports:
+         - "3001:3001"
+       environment:
+         - NODE_ENV=production
+         - PORT=3001
+   ```
+   Run with: `docker-compose up --build`
+
+## 🧪 Testing
+
+### Running Tests
 
 ```bash
-# Run all workspace tests
+# Run all tests (client and server)
 npm test
 
-# Server tests only
+# Watch mode (re-run on changes)
+npm test -- --watch
+
+# Generate coverage report
+npm test -- --coverage
+
+# Run server tests only
 npm run test -w server
 
-# Client tests only
+# Run client tests only
 npm run test -w client
 ```
+
+### Test Structure
+- Server tests: `server/tests/`
+- Client tests: `client/src/tests/`
+- Test utilities: `test/setup.ts`
+
+## 👩‍💻 User Guide
+
+### 1. Uploading Files
+1. Click "Upload" in the navigation
+2. Select either a strings or classifications CSV file
+3. The application will automatically detect the file type based on headers
+4. Use the sample files in `samples/` for reference
+
+### 2. Editing Data
+- **Edit Cells**: Click any cell to edit its contents
+- **Add Rows**: Use the "Add Row" button to insert new entries
+- **Delete Rows**: Click the trash icon to remove rows
+- **Save Changes**: Click "Save Changes" to persist your edits
+
+### 3. Validating Data
+1. Click the "Validate" button to check for errors
+2. Invalid entries will be highlighted
+3. Hover over error indicators to see validation messages
+4. Fix any issues before exporting
+
+### 4. Exporting Data
+1. Click "Export" in the navigation
+2. Select the data type (strings or classifications)
+3. The file will be downloaded automatically
+4. The exported file will include all current changes
 
 ## Docker
 
